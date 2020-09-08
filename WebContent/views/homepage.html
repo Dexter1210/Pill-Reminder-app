@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Pill Reminder: Home Page</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    
+    <script type="text/javascript">
+    window.onload = function(){
+    	x = sessionStorage.getItem("name");
+    	if(x!=null)
+    		document.getElementById("msg").innerHTML=x;
+    	else
+    		document.getElementById("msg").innerHTML="User";
+    }
+    function logout(){
+		 sessionStorage.clear();
+	 }
+    function addmedicalhistory(){
+		 location.href="http://localhost:8080/PillsProjectOriginal/views/medicalhistory.html"
+	 }
+   
+    
+    
+    </script>
+</head>
+<body>
+<div>
+     <nav class="navbar navbar-default">
+					<div style="margin-right: 2%; margin-left: 2%;">
+
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="#"><i class="fa fa-home" aria-hidden="true"></i>Home</a></li>
+        <li><a href="http://localhost:8080/PillsProjectOriginal/views/Userprofile.html"><i class="fa fa-user" aria-hidden="true"></i>My Profile</a></li>
+        <li><a href="http://localhost:8080/PillsProjectOriginal/views/medicalhistory.html"><i class="fa fa-heartbeat" aria-hidden="true"></i>Medical History</a></li>
+      </ul>
+      
+      <ul class="nav navbar-nav navbar-right">
+    	<li><a href="http://localhost:8080/PillsProjectOriginal/views/Reset.html"><i class="fa fa-key" aria-hidden="true"></i>
+        Change Password</a></li>
+        <li><a href="http://localhost:8080/PillsProjectOriginal/views/Login.html" onclick="logout()"><i class="fa fa-sign-out" aria-hidden="true"></i>
+        Log Out</a></li>
+      </ul>
+    </div>
+</nav>
+</div>
+
+
+     <div class="jumbotron" style="width: 50%; margin: auto; margin-top: 50px; background-color: white; border: tomato;">
+        <!--<h1 style="font-family: 'Vollkorn', serif;"><i class="fa fa-camera-retro"></i>
+         Welcome User!</h1> -->
+         <div style="width: 80%; margin: auto;">
+            <img src="images/60111.jpeg" alt="Avatar" class="avatar" style="margin-left: -50px;float: left; vertical-align: middle; width: 100px; height: 100px; border-radius: 50%;">
+            <h1 style="margin-left: 100px; margin-top: 50px;">Welcome <span id="msg"></span>!</h1>
+            
+        </div>
+        <button class="btn btn-default btn-lg" onclick="addmedicalhistory()" style="margin-left: 15%; margin-top: 50px;"><i class="fa fa-stethoscope" aria-hidden= "true"></i>
+            Add medical history</button>
+      </div>
+
+
+     
+    
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    
+</body>
+</html>

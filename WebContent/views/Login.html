@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Pill Reminder: Login</title>
+<link rel="stylesheet" type="text/css" href="stylesheet.css">
+<style type="text/css">
+header h1{
+	text-align: center;
+}
+</style>
+<script type="text/javascript">
+	function Verify(){
+	var email =document.getElementById("uemail").value;
+	var pwd =document.getElementById("upwd").value;
+	url="http://localhost:8080/PillsProjectOriginal/demo/user/verifyuser";
+	request = new XMLHttpRequest();
+	request.open("post",url, true);
+	request.onreadystatechange = function() {
+	if(request.readyState==4 && request.status==200){
+		data = request.responseText;
+		if(data === "Incorrect"){
+			alert("Incorrect details")
+			window.location.href="http://localhost:8080/PillsProjectOriginal/views/Login.html"; 
+		}else{
+			sessionStorage.setItem("logged", true);
+		    sessionStorage.setItem("email", email);
+		    sessionStorage.setItem("pwd", pwd);
+		    sessionStorage.setItem("name", data);
+			window.location.href="http://localhost:8080/PillsProjectOriginal/views/homepage.html";
+		}
+	}
+	
+	}
+	request.setRequestHeader("content-type", "application/x-www-form-urlencoded");
+	request.send("email="+email+"&pwd="+pwd);
+	return false;
+	}
+</script>
+</head>
+<body>
+	<header>
+		<h1>Welcome To Pill Reminder!</h1>
+	</header>
+	<div class="sign">
+		<div class="sign1">
+			<h1>
+				<img
+					src="http://localhost:8080/PillsProjectOriginal/views/images/oie_png.png">
+			</h1>
+		</div>
+		<div class="sign2">
+			<div class="sign21">
+				<form
+					action="http://localhost:8080/PillsProjectOriginal/views/Login.html"
+					method="post" onsubmit=" return Verify()">
+					<div class="fo1">
+						<h2>
+							<span>Login</span>
+						</h2>
+						<p class="foo1">
+							<span> <label></label> <input type="email" name="email"
+								id="uemail" required placeholder="Email">
+							</span>
+						</p>
+						<p class=" foo1">
+							<span> <label></label> <input type="password" name="pwd"
+								id="upwd" required placeholder="Password">
+							</span>
+						</p>
+						<p class="roo1">
+							<label> <input type="checkbox" name="remember"> <span>Remember
+									me</span>
+							</label>
+						</p>
+						<p class="roo2">
+							<a
+								href="http://localhost:8080/PillsProjectOriginal/views/Forget.html">Forgot
+								your password?</a>
+						</p>
+						<p class="roo3">
+							<button class="roo31">
+								<span>Sign in to your account</span>
+							</button>
+						</p>
+					</div>
+					<span id="msg"></span>
+				</form>
+			</div>
+		</div>
+		<div class="sign3">
+			<a
+				href="http://localhost:8080/PillsProjectOriginal/views/Registration.html">
+				<p>
+					Don't have an account? <strong>Register</strong>
+				</p>
+			</a>
+		</div>
+
+	</div>
+</body>
+</html>

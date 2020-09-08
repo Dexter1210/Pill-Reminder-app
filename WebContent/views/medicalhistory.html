@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>medicalhistory</title>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+	crossorigin="anonymous">
+<link rel="stylesheet"
+	href="http://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+
+
+<style>
+#view {                                          /*for heading "view medical history" */
+	font-size: 1.2cm;
+	text-align: left;
+	padding-left: 8%;
+	position: fixed;
+	top: 20%;
+}
+
+#medicalhistory {                                 /*for Medcial History table */ 
+	position: fixed;
+	top: 30%;
+	padding-left: 8%;
+	border-style: double;
+    border-color: rgb(71, 68, 68);
+	text-align: center;
+	vertical-align: 1.5cm;
+	width: 80%;
+	margin-left: 8%;
+	margin-right: 5%;
+}
+
+#addrow {                                    /*for Button Add Medcial History */
+	position: fixed;
+	left: 75%;
+	top: 21%;
+	background-color:#337ab7;
+	border: 1px;
+    border-color: transparent;
+    border-radius: 4px;
+	color: white;
+	padding: 15px 32px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 20px;
+}
+
+#medicalhistory tr,td {                             /*border style for rows and column*/
+	border-style: solid;
+	border-width: 0.5mm;
+    border-color: rgb(71, 68, 68);
+}
+
+th {                                                  /*for the categories in table*/
+	font-size: large;
+	text-align: center;
+	border-style: solid;
+	border-width: 0.5mm;
+    border-color: rgb(71, 68, 68);
+}
+
+#relation {                                           /*for dropdown*/
+	position: fixed;
+	left: 32%;
+	top: 21%;
+	background-color:#337ab7;
+	border: 1px;
+    border-color: transparent;
+    border-radius: 4px;
+	color: white;
+	padding: 15px 32px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 20px;
+}
+
+#save {                                               /*for save button*/
+	position: fixed;
+	left: 40%;
+	top: 80%;
+	background-color:#337ab7;
+	border: 1px;
+    border-color: transparent;
+    border-radius: 4px;
+	color: white;
+	padding: 15px 32px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 20px;
+}
+
+#cancel {                                                /*for cancel button*/
+	position: fixed;
+	right: 40%;
+	top: 80%;
+	background-color:#337ab7;
+	border: 1px;
+    border-color: transparent;
+    border-radius: 4px;
+	color: white;
+	padding: 15px 32px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 20px;
+}
+
+#message{
+ position: fixed;
+	left: 38%;
+	top: 90%;
+	font-size: large;
+}
+
+</style>
+
+<script type="text/javascript">
+	window.onload = function() {                                    // loads the dropdown menu
+
+		requestonload = new XMLHttpRequest();
+		var email = sessionStorage.getItem("email");
+		var url = "http://localhost:8080/PillsProjectOriginal/demo/user/loaddropdown/"
+				+ email;
+		requestonload.open("get", url, true)
+		requestonload.onreadystatechange = function() {
+			if (requestonload.readyState == 4 && requestonload.status == 200) {
+				var user = requestonload.responseText;
+				relate = JSON.parse(user);
+
+				for (rlt in relate) {
+					drop = document.getElementById("relation");
+
+					option1 = document.createElement("option");
+					option1.setAttribute("value", rlt);
+					tx = document.createTextNode(rlt);
+					option1.appendChild(tx);
+					option1.set
+					drop.appendChild(option1);
+				}
+			}
+		}
+
+		requestonload.send(null);
+
+	}
+
+	function displayMedicalHistory() {                                       //displys medical history of name selected
+
+		var editTable = document.getElementById('medicalhistory');
+
+		if (editTable.rows.length > 1) {
+
+			len = editTable.rows.length;
+			for (var j = (len - 1); j > 0; j--) {
+				editTable.deleteRow(j);
+			}
+		}
+
+		var option = document.getElementById("relation");
+		var name = option.options[option.selectedIndex].text;
+		
+		var requesthistory = new XMLHttpRequest();
+		var useremail = sessionStorage.getItem("email");
+		var urls = "http://localhost:8080/PillsProjectOriginal/demo/user/gethistory/"
+				+ useremail + "/" + name;
+		requesthistory.open("get", urls, true);
+		requesthistory.onreadystatechange = function() {
+			if (requesthistory.readyState == 4 && requesthistory.status == 200) {
+				var users = requesthistory.responseText;
+	
+				hist = JSON.parse(users);
+
+				displaytable = document.getElementById("medicalhistory");
+				var x = displaytable.rows
+				var rows = hist.length;
+				var column = 10;
+
+				for (i = 0; i < rows; i++) {
+
+					tr1 = displaytable.insertRow(i + 1);
+
+					td1 = document.createElement("td");
+					tx1 = document.createTextNode(hist[i].illness);
+					td1.appendChild(tx1);
+					tr1.appendChild(td1);
+
+					td2 = document.createElement("td");
+					tx2 = document.createTextNode(hist[i].doctorname);
+					td2.appendChild(tx2);
+					tr1.appendChild(td2);
+
+					td3 = document.createElement("td");
+					tx3 = document.createTextNode(hist[i].medicine);
+					td3.appendChild(tx3);
+					tr1.appendChild(td3);
+
+					td4 = document.createElement("td");
+					tx4 = document.createTextNode(hist[i].startDate);
+					td4.appendChild(tx4);
+					tr1.appendChild(td4);
+
+					td5 = document.createElement("td");
+					tx5 = document.createTextNode(hist[i].endDate);
+					td5.appendChild(tx5);
+					tr1.appendChild(td5);
+
+					td6 = document.createElement("td");
+					tx6 = document.createTextNode(hist[i].dosage);
+					td6.appendChild(tx6);
+					tr1.appendChild(td6);
+
+					td7 = document.createElement("td");
+					tx7 = document.createTextNode(hist[i].dosageFrequency);
+					td7.appendChild(tx7);
+					tr1.appendChild(td7);
+
+					td8 = document.createElement("td");
+					tx8 = document.createTextNode(hist[i].dosageTime);
+					td8.appendChild(tx8);
+					tr1.appendChild(td8);
+
+					td9 = document.createElement("td");
+					tx9 = document.createTextNode(hist[i].notify);
+					td9.appendChild(tx9);
+					tr1.appendChild(td9);
+
+					td10 = document.createElement("td");
+					td10.setAttribute("style","width:121.333px");
+					td10.setAttribute("style","height:22.667pxpx");
+					var button = document.createElement('input');
+					button.setAttribute('type', 'button');
+					button.setAttribute('value', 'Remove');
+					button.setAttribute('onclick', 'removeRow(this)');
+					td10.appendChild(button);
+					tr1.appendChild(td10);
+
+					medicalhistory.appendChild(tr1);
+				}
+			}
+		}
+		requesthistory.send(null);
+		document.getElementById("message").innerHTML =" " ;
+		return false;
+	}
+
+	function saveMedicalHistory() {                                            // save medical history
+
+		var option = document.getElementById("relation");
+		var name = option.options[option.selectedIndex].text;
+		var saveHistory = document.getElementById('medicalhistory');
+		var rowLength = saveHistory.rows.length;
+		var index = rowLength - 1;
+
+		var element = saveHistory.rows.item(index).cells;
+
+		illness = element[0].childNodes[0].value;
+		doctorname = element[1].childNodes[0].value;
+		medicine = element[2].childNodes[0].value;
+		startDate = element[3].childNodes[0].value;
+		endDate = element[4].childNodes[0].value;
+		dosage = element[5].childNodes[0].value;
+		dosageFrequency = element[6].childNodes[0].value;
+		dosageTime = element[7].childNodes[0].value;
+		notifynode = element[8].childNodes[0];
+		notify=notifynode.options[notifynode.selectedIndex].text;
+
+		var useremail = sessionStorage.getItem("email");
+		var medHistoryProfile = "useremail=" + useremail + "&dname=" + name
+				+ "&illness=" + illness + "&doctorname=" + doctorname
+				+ "&medicine=" + medicine + "&startDate=" + startDate
+				+ "&endDate=" + endDate + "&dosage=" + dosage
+				+ "&dosageFrequency=" + dosageFrequency + "&dosageTime="
+				+ dosageTime + "&notify=" + notify;
+
+		urli = "http://localhost:8080/PillsProjectOriginal/demo/user/saverecord";
+		requestsaving = new XMLHttpRequest();
+		requestsaving.open("post", urli, true);
+		requestsaving.onreadystatechange = function() {
+			if (requestsaving.readyState == 4 && requestsaving.status == 200) {
+				var msg = requestsaving.responseText;
+				console.log(msg);
+				document.getElementById("message").innerHTML =msg;
+				
+			}
+
+		}
+
+		requestsaving.setRequestHeader("content-type",
+				"application/x-www-form-urlencoded");
+		requestsaving.send(medHistoryProfile);
+		return false;
+	}
+
+	function addRow() {                                                    //adds a new row
+
+		addtable = document.getElementById("medicalhistory");
+
+		var rowCnt = addtable.rows.length;
+		var tr = addtable.insertRow(rowCnt);
+
+		for (var c = 0; c < 10; c++) {
+			var td = document.createElement('td');
+			td = tr.insertCell(c);
+
+			if (c < 3) {
+				var ele = document.createElement("input");
+				ele.setAttribute("style","width:inherit");
+				ele.setAttribute("style","height:22.667px");
+				ele.setAttribute("style","padding:0px 0px");
+				ele.setAttribute("type", "text");
+				ele.setAttribute("value", " ");
+				td.appendChild(ele);	
+			}
+			else if(c==3 || c==4){
+				var ele = document.createElement("input");
+				ele.setAttribute("style","width:120px");
+				ele.setAttribute("style","height:22.667px");
+				ele.setAttribute("style","padding:0px 0px");
+				ele.setAttribute("type", "date");
+				td.appendChild(ele);				
+			}
+			else if(c==5){
+				var ele = document.createElement("input");
+				ele.setAttribute("style","width:114.667px");
+				ele.setAttribute("style","height:22.667px");
+				ele.setAttribute("style","padding:0px 0px");
+				ele.setAttribute("type", "text");
+				td.appendChild(ele);	
+			}
+			else if(c==6){
+				var ele = document.createElement("input");
+				ele.setAttribute("style","width:157.33px");
+				ele.setAttribute("style","height:22.667px");
+				ele.setAttribute("style","padding:0px 0px");
+				ele.setAttribute("type", "text");
+				td.appendChild(ele);
+			}
+			else if(c==7){
+				var ele = document.createElement("input");
+				ele.setAttribute("style","width:110.667px");
+				ele.setAttribute("style","height:22.667px");
+				ele.setAttribute("style","padding:0px 0px");
+				ele.setAttribute("type","time");
+				td.appendChild(ele);
+			}
+			else if (c == 8) {
+				var dropdown=document.createElement("select");
+				dropdown.setAttribute("style","width:188px");
+				dropdown.setAttribute("style","height:22.667pxpx");
+				dropdown.setAttribute("style","padding:0px 0px");
+				var choice=document.createElement("option")
+				choice.text="--";
+				dropdown.appendChild(choice)
+				var option1=document.createElement("option")
+				option1.text="YES";
+				dropdown.appendChild(option1);
+				var option2=document.createElement("option")
+				option2.text="NO";
+				dropdown.appendChild(option2);
+				td.appendChild(dropdown);
+			}
+			else {
+				var button = document.createElement("input");
+				button.setAttribute("style","width:121.333px");
+				button.setAttribute("style","height:22.667pxpx");
+				button.setAttribute("type", "button");
+				button.setAttribute("value", "Remove");
+				button.setAttribute("onclick", "removeRow(this)");
+				td.appendChild(button);
+			}
+
+		}
+
+	}
+
+	function removeRow(button) {                                         // removes the row and also delete the saved history mentioned in that row 
+
+		addtable = document.getElementById('medicalhistory');
+
+		var option = document.getElementById("relation");
+		var name = option.options[option.selectedIndex].text;
+
+		index = (button.parentNode.parentNode.rowIndex);
+		element = addtable.rows.item(index).cells;
+		var useremail = sessionStorage.getItem("email");
+		
+		entry = element[0].innerHTML;
+		historyid = (index - 1);
+
+		if (entry.length > 0) {
+
+			urli = "http://localhost:8080/PillsProjectOriginal/demo/user/deleterecord";
+			requestdelete = new XMLHttpRequest();
+			requestdelete.open("post", urli, true);
+			requestdelete.onreadystatechange = function() {
+
+				if (requestdelete.readyState == 4
+						&& requestdelete.status == 200) {
+					var msg = requestdelete.responseText;
+					console.log(msg);
+					document.getElementById("message").innerHTML =msg;
+                     
+				}
+			}
+			requestdelete.setRequestHeader("content-type",
+					"application/x-www-form-urlencoded");
+			requestdelete.send("useremail=" + useremail + "&name=" + name
+					+ "&historyid=" + historyid);
+		}
+		addtable.deleteRow(button.parentNode.parentNode.rowIndex);
+
+		return false;
+	}
+	
+	function logout(){                                                                     // logout 
+		 sessionStorage.clear();
+	 }
+	
+</script>
+
+</head>
+<body>
+	<div>
+		<nav class="navbar navbar-default">
+					<div style="margin-right: 2%; margin-left: 2%;">
+						<ul class="nav navbar-nav">
+				<li><a href="homepage.html"><i class="fa fa-home" aria-hidden="true"></i>Home</a></li>
+				<li><a href="Userprofile.html"><i class="fa fa-user" aria-hidden="true"></i>My Profile</a></li>
+				<li class="active"><a><i class="fa fa-heartbeat" aria-hidden="true"></i>Medical History</a></li>
+			</ul>
+
+			<ul class="nav navbar-nav navbar-right">
+               <li><a
+					href="http://localhost:8080/PillsProjectOriginal/views/Reset.html"><i
+						class="fa fa-key" aria-hidden="true"></i> Change Password</a></li>
+				<li><a
+					href="http://localhost:8080/PillsProjectOriginal/views/Login.html"
+					onclick="logout()"><i class="fa fa-sign-out" aria-hidden="true"></i>
+						Log Out</a></li>
+
+			</ul>
+		</div>
+		</nav>
+	</div>
+	<div id="b">
+
+		<br> <br> <span id="view">View MedicalHistory</span>
+		<form action=" " onselect="displayMedicalHistory()">
+			<select id="relation" name="relation"
+				onchange=" return displayMedicalHistory()">
+				<option value="default">Select</option>
+			</select>
+		</form>
+		<span style="text-align: left"><button id="addrow"
+				type="submit" onclick="return addRow()">Add Medical History</button></span>
+
+
+		<br> <br>
+
+		<table id="medicalhistory">
+			<thead>
+				<tr>
+					<th>illness</th>
+					<th>Doctor <br> Details
+					</th>
+					<th>Medicines</th>
+					<th>Start <br> Date
+					</th>
+					<th>End <br>Date
+					</th>
+					<th>Dosage<br> Amount
+					</th>
+					<th>Dosage <br>Frequency
+					</th>
+					<th>Dosage <br>Time
+					</th>
+					<th>Email<br> Notifications
+					</th>
+					<th>Remove</th>
+				</tr>
+			</thead>
+		</table>
+
+	</div>
+
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+		integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+		crossorigin="anonymous"></script>
+
+	<footer>
+		<form method="post" action=" " onsubmit="return saveMedicalHistory()"
+			enctype="application/x-www-form-urlencoded">
+			<button class="button" id="save" type="submit">Save</button>
+		</form>
+		<a href="homepage.html"><input type="submit" id="cancel" value="Cancel"></a>
+	</footer>
+
+	</bod>
+	<b><span id="message"></span></b>
+</html>

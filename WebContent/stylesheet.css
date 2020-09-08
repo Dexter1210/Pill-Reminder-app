@@ -1,0 +1,185 @@
+body{
+    font-family: Camphor,Segoe UI,Open Sans,sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: normal;
+    color: #525f7f;
+    padding:0;
+    margin:0;
+    height:629px;
+    background-color:#ebf0f3
+}
+.sign{
+    width:100%;
+    height:100%;
+}
+.sign1{
+    height: 90px;
+    margin: 0 auto;
+    padding-top: 90px;
+    padding-bottom: 60px;
+    width: 330px;
+    
+}
+.sign1 h1{
+    height: 45px;
+    margin: 0 auto;
+    width: 109px;
+}
+.sign1 img{
+    width:100%;
+    height:200%;
+}
+.sign2{
+    height: 317px;
+    margin: 0 auto;
+    padding-top:0;
+    width: 330px;
+    background: linear-gradient(#fff,#f2f6f9);
+    border-radius: 6px;
+    box-shadow: 0 0 0 1px rgba(14,41,57,.12), 0 2px 5px rgba(14,41,57,.44), inset 0 -1px 2px rgba(14,41,57,.15);
+}
+.sign21{
+    height:317px;
+    width:330px;    
+}
+form{
+    padding:14px;
+    height:289px;
+    width:302px;
+}
+.fo1{
+    height:275px;
+    width:302px;
+    margin:0 0 14px;
+}
+.fo1 h2{
+    height:22px;
+    width:254px;
+    padding:17px 24px;
+    margin:0 0 17px 0;
+    color: #1e2b32;
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 21px;
+    text-align: center;
+}
+.foo1{
+    margin:0;
+    margin-bottom: 14px;
+    padding: 0;
+    width:302px;
+    height:46px;    
+}
+.foo1 span{
+    width:302px;
+    height:46px;
+    margin:0px;
+    padding:0px;
+}
+.foo1 span input{
+    height:24px;
+    width:276px;
+    padding:10px 12px;
+    border-radius: 5px;
+    box-shadow: inset 0 1px 2px rgba(0,0,0,.18);
+    border: 1px solid #bbb;
+    border-top-color: #999;
+    font-size: 18px;
+    background-color: #fff;
+    color: #000;
+    font-family: Camphor,Segoe UI,Open Sans,sans-serif;
+    font-size: 18px;
+}
+.roo1{
+    width:302px;
+    height:12px;
+    padding:5px 0;
+    margin:5px 0 14px 0;
+    display:inline;
+}
+.roo2{
+    height:12;
+    width:121.266px;
+    padding:0;
+    margin:5px 0 14px 0;
+    float: right;
+    font-size: 12px;
+    line-height: 12px;
+    color: #777;
+}
+.roo2 a{
+    color: #3297d3;
+    float: right;
+    font-size: 12px;
+    line-height: 12px;
+    color: #777;
+    text-decoration:none;
+}
+.roo3{
+    height:44px;
+    width:302px;
+    margin:0;
+    margin-top:20px;
+}
+.roo31{
+    box-sizing: border-box;
+    text-align: center;
+    height: 44px;
+    width: 302px;
+    border-radius: 6px;
+    background: linear-gradient(#7dc5ee,#008cdd 85%,#30a2e4);
+    box-shadow: inset 0 1px 0 hsla(0,0%,100%,.25);
+    padding: 1px;
+    outline:none;
+    border:0;
+}
+.roo31 span{
+    width:300px;
+    height: 29px;
+    padding: 13px 0 0;
+    border-radius: 5px;
+    font-size: 16px;
+    line-height: 16px;
+    font-weight:600;
+    color:#fff;
+    text-shadow: 0 1px 1px rgba(0,0,0,.53);
+}
+
+.sign3{
+    margin-top: 20px;
+    padding: 0;
+    width: 330px;
+    margin-left:auto;
+    margin-right:auto;
+    height:52px;
+    border-radius: 4px;
+}
+.sign3 a{
+    display: block;
+    padding: 15px;
+    border-radius: 6px;
+    box-shadow: inset 0 1px 0 hsla(0,0%,100%,.5), 0 1px 0 hsla(0,0%,100%,.5);
+    border: 1px solid rgba(14,41,57,.1);
+    color: #455b67;
+    font-size: 13px;
+    font-weight: 700;
+    text-align: center;
+    text-decoration: none;
+    height:20px;
+    width:298px;
+}
+.sign3 a:hover{
+    opacity:0.7;
+}
+.sign3 a p{
+    margin:0;
+    color: #455b67;
+    font-size: 13px;
+    font-weight: 700;
+    text-align: center;
+}
+.sign3 a p strong{
+    color: #3297d3;
+    font-weight: 700;
+}

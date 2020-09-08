@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Medical History</title>
+</head>
+<body>
+	
+	<form action=""  method="get" onsubmit="return func()">
+		<input type="submit">
+	</form>
+	
+	<span id= "text"></span>
+</body>
+
+<script type="text/javascript">
+	function func(){
+		//var uemail= document.getElementById("uemail").value;
+		//var upwd= document.getElementById("upwd").value;
+		//var url= "http://localhost:8080/pillsprojectv2/us/user/userlogin";
+		request= new XMLHttpRequest();
+		request.open("get", "medhist.jsp", true);
+		request.onreadystatechange= function(){
+			if(request.readyState == 4 && request.status == 200){
+				message= request.responseText;
+				console.log(message);
+				document.getElementById("text").innerHTML= message; 
+				/*console.log(typeof message);
+				var t= "1";
+				console.log(t);
+				console.log(typeof t);
+				var comp= t.localeCompare(message);
+				console.log(comp);
+				console.log(typeof comp);*/
+				//if(t.localeCompare(message) == 0){
+				/*sessionStorage.setItem("logged", true);
+				sessionStorage.setItem("uemail", uemail);
+				location.href="homepage.html";*/
+				//}
+			}
+		}
+		//request.setRequestHeader("content-type", "application/x-www-form-urlencoded");
+		request.send(null);
+		return false;
+	}
+	
+</script>
+
+</html>

@@ -1,0 +1,150 @@
+<html>
+<head><title>Pill Reminder: Reset Password</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    
+       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <style type="text/css" rel="stylesheet">
+        table{
+            text-align:center;
+            margin-left: auto;
+            margin-right: auto ;
+        }
+    </style>
+    <script type="text/javascript">
+    
+    window.onchange = function() {
+   	 x = sessionStorage.getItem("pwd");
+    	if (x === document.getElementById("pwd").value) {
+    		 document.getElementById("msg").innerHTML="";
+    	}	
+    	else{ 
+    		document.getElementById("msg").innerHTML="Old Password is Wrong";
+    	pwd.focus();
+		return false;
+    	}
+    } 
+   function Check(){
+   	x = sessionStorage.getItem("pwd");
+   	if (x === document.getElementById("pwd").value) {
+   		 document.getElementById("msg").innerHTML="";
+   		return ChangePassword();
+   	}	
+   	else{ document.getElementById("msg").innerHTML="Old Password is Wrong";
+   	pwd.focus();
+		return false;
+   	}
+   	
+   }
+   function ChangePassword(){
+   	var pwd =document.getElementById("pwd").value;
+   	var npwd =document.getElementById("npwd").value;
+   	var npwd1 =document.getElementById("npwd1").value;
+   	url="http://localhost:8080/PillsProjectOriginal/demo/user/ChangePassword"
+   		sessionStorage.setItem("pwd",null);
+   	if(npwd.length<8){
+			document.getElementById("msg").innerHTML= "Password must have atleast 8 characters";
+			return false;
+			}
+			re = /[0-9]/;
+			if(!re.test(npwd)) {
+			document.getElementById("msg").innerHTML= "Password must contain at least one number (0-9)!";
+			return false;
+			}
+			re = /[a-z]/;
+			if(!re.test(npwd)) {
+			document.getElementById("msg").innerHTML= "Password must contain at least one lowercase letter (a-z)!";
+			return false;
+			}
+			re = /[A-Z]/;
+			if(!re.test(npwd)) {
+			document.getElementById("msg").innerHTML="Password must contain at least one uppercase letter (A-Z)!";
+			return false;
+			}
+			re=/[!@#$%^&*]/;
+			if(!re.test(npwd)) {
+			document.getElementById("msg").innerHTML="Password must contain at least one special characters";
+			return false;
+			}
+   	if(npwd==npwd1){
+   		request = new XMLHttpRequest();
+   		var email = sessionStorage.getItem("email");
+   		request.open("put", url, true);
+   		request.onreadystatechange = function() {
+   		if(request.readyState==4 && request.status==200){
+   			data = request.responseText;
+   			console.log(data);
+   			if(data=="true"){
+   				 document.getElementById("msg").innerHTML="Password Changed";
+   				
+   				sessionStorage.setItem("pwd",npwd);
+   				window.location.href="http://localhost:8080/PillsProjectOriginal/views/Login.html";
+   				return true;
+   			}else{
+   				 document.getElementById("msg").innerHTML="Password Not Changed.";
+   				window.location.href="http://localhost:8080/PillsProjectOriginal/views/Reset.html";
+   				return false;
+   			}
+   		}
+   		
+   		}
+   		request.setRequestHeader("content-type", "application/x-www-form-urlencoded");
+   		request.send("npwd="+npwd+"&email="+email);
+   	}else{
+   		
+   		document.getElementById("msg").innerHTML="Passwords must be same!";
+			return false;
+   	}
+   	
+   }
+    </script>
+</head>
+<body>
+<div>
+     <nav class="navbar navbar-default">
+					<div style="margin-right: 2%; margin-left: 2%;">
+
+      <ul class="nav navbar-nav">
+        <li ><a href="http://localhost:8080/PillsProjectOriginal/views/homepage.html"><i class="fa fa-home" aria-hidden="true"></i>Home</a></li>
+        <li><a href="http://localhost:8080/PillsProjectOriginal/views/Userprofile.html"><i class="fa fa-user" aria-hidden="true"></i>My Profile</a></li>
+        <li><a href="http://localhost:8080/PillsProjectOriginal/views/medicalhistory.html"><i class="fa fa-heartbeat" aria-hidden="true"></i>Medical History</a></li>
+      </ul>
+      
+      <ul class="nav navbar-nav navbar-right">
+    	<li class="active"><a href="http://localhost:8080/PillsProjectOriginal/views/Reset.html"><i class="fa fa-key" aria-hidden="true"></i>
+        Change Password</a></li>
+        <li><a href="http://localhost:8080/PillsProjectOriginal/views/Login.html" onclick="logout()"><i class="fa fa-sign-out" aria-hidden="true"></i>
+        Log Out</a></li>
+      </ul>
+    </div>
+</nav>
+</div>
+<br>
+<form action="" method="post" onsubmit="return Check()">
+<table>
+<tr>
+    <td>Old Password:</td>
+    <td><input type="password" name="pwd" id="pwd" class="form-control" style="margin-top: 6px;" required></td>
+</tr>
+<tr>
+    <td>New Password:</td>
+    <td><input type="password" name="npwd" id="npwd" class="form-control" style="margin-top: 6px;" required></td>
+</tr>
+<tr>
+    <td>Confirm New Password:</td>
+    <td><input type="password" name="npwd1" id="npwd1" class="form-control" style="margin-top: 6px;" required></td>
+</tr>
+<br>
+<tr>
+       <!-- <td></td> -->
+        <td><input type="submit" value="Submit" class="btn btn-primary" style="margin-top: 6px; margin-left: 60%"></td>
+        <td></td>
+</tr>
+</table>
+</form>
+<div align="center">
+<span id="msg"></span>
+</div>
+</body>
+</html>
